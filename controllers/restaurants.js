@@ -5,6 +5,11 @@ const router = express.Router();
 
 Restaurant.init()
 
+router.get('/', async (req, res) => {
+    const restos = await Restaurant.all();
+    res.json(restos);
+})
+
 router.get('/:id', async (req, res) => {
     const resto = await Restaurant.get(req.params.id);
     if (resto === null) {
@@ -20,6 +25,6 @@ router.post('/', (req, res) => {
     res.sendStatus(201)
 })
 
-router.put('/:id', )
+// router.delete('/:id', (req, res))
 
 module.exports = router
