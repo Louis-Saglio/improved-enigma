@@ -49,6 +49,7 @@ class Restaurants {
             this.address,
             this.name,
             this.capacity,
+            Date.now(),
             this.id
         )
     }

@@ -30,4 +30,19 @@ router.delete('/:id', (req, res) => {
     res.sendStatus(204)
 })
 
+router.put('/:id', async (req, res) => {
+    const resto = await Restaurants.get(req.params.id);
+    if (resto == undefined) {
+        res.sendStatus(404)
+    } else {
+        const {address, name, capacity} = req.body
+        resto.address = (address == undefined ? resto.address : address)
+        resto.name = (name == undefined ? resto.name : name)
+        resto.capacity = (capacity == undefined ? resto.capacity : capacity)
+        resto.update()
+        res.sendStatus(204)
+    }
+    
+})
+
 module.exports = router
