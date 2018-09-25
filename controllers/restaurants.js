@@ -6,7 +6,12 @@ const router = express.Router();
 Restaurant.init()
 
 router.get('/:id', async (req, res) => {
-    res.json(await Restaurant.get(req.params.id))
+    const resto = await Restaurant.get(req.params.id);
+    if (resto === null) {
+        res.sendStatus(404)
+    } else {
+        res.json(resto)
+    }
 })
 
 router.post('/', (req, res) => {
