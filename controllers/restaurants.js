@@ -1,17 +1,17 @@
 const express = require('express')
-const Restaurant = require('./../models/restaurants')
+const Restaurants = require('./../models/restaurants')
 
 const router = express.Router();
 
-Restaurant.init()
+Restaurants.init()
 
 router.get('/', async (req, res) => {
-    const restos = await Restaurant.all();
+    const restos = await Restaurants.all();
     res.json(restos);
 })
 
 router.get('/:id', async (req, res) => {
-    const resto = await Restaurant.get(req.params.id);
+    const resto = await Restaurants.get(req.params.id);
     if (resto === null) {
         res.sendStatus(404)
     } else {
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', (req, res) => {
     const {address, name, capacity} = req.body
-    new Restaurant(address, name, capacity).insert()
+    new Restaurants(address, name, capacity).insert()
     res.sendStatus(201)
 })
 
