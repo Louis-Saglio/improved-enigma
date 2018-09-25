@@ -25,6 +25,9 @@ router.post('/', (req, res) => {
     res.sendStatus(201)
 })
 
-// router.delete('/:id', (req, res))
+router.delete('/:id', (req, res) => {
+    Restaurants.delete(req.params.id)
+    res.sendStatus(204)
+})
 
 module.exports = router

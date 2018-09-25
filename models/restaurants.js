@@ -56,6 +56,10 @@ class Restaurants {
     static async all() {
         return await sqlite.all('SELECT * FROM restaurants')
     }
+
+    static delete(id) {
+        sqlite.run('DELETE FROM restaurants WHERE rowid = ?', id)
+    }
 }
 
 
