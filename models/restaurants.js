@@ -18,16 +18,17 @@ class Restaurants {
     }
 
     async insert() {
-        const data = await sqlite.run(
+        return sqlite.run(
                 'INSERT INTO restaurants(address, name, capacity, createdOn, updatedOn) VALUES (?, ?, ?, ?, ?)',
                 this.address,
                 this.name,
                 this.capacity,
                 this.createdOn,
                 this.updatedOn
-            )
-        this.id = data.lastID
-        return this
+        )
+        .then(() => {
+            this.id = data.lastID
+        })
     }
 
     static async get(id) {

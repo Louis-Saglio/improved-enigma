@@ -21,7 +21,13 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', (req, res) => {
     const {name, restaurant_id} = req.body
-    new Employees(name, restaurant_id).insert().then(() => {res.sendStatus(201)}).catch(() => {res.sendStatus(500)}) // todo reflect in restaurants
+    new Employees(name, restaurant_id).insert()
+    .then(() => {
+        res.sendStatus(201)
+    })
+    .catch(() => {
+        res.sendStatus(500)
+    }) // todo reflect in restaurants
 })
 
 router.delete('/:id', (req, res) => {

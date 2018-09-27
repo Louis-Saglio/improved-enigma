@@ -22,7 +22,12 @@ router.get('/:id', async (req, res) => {
 router.post('/', (req, res) => {
     const {address, name, capacity} = req.body
     new Restaurants(address, name, capacity).insert()
-    res.sendStatus(201)
+    .then(() => {
+        res.sendStatus(201)
+    })
+    .catch(() => {
+        res.sendStatus(500)
+    })
 })
 
 router.delete('/:id', (req, res) => {
