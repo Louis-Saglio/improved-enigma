@@ -1,6 +1,5 @@
 const express = require('express')
-// const Employees = require('./../models/employees')
-const {Restaurants, Employees} = require('./../orm/restaurants')
+const {Restaurants, Employees} = require('./../model/restaurants')
 
 const router = express.Router();
 
@@ -30,11 +29,13 @@ router.delete('/:id', (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-    Employees.update(
+    await Employees.update(
         req.body,
-        {where: {id: req.params.id}}
+        {
+            where: {id: req.params.id}
+        }
     )
-    res.sendStatus(204)    
+    res.send(await Employees.findById(req.params.id))    
 })
 
 module.exports = router
