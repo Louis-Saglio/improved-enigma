@@ -58,6 +58,10 @@ class Employees {
     static delete(id) {
         sqlite.run('DELETE FROM employees WHERE rowid = ?', id)
     }
+
+    static async getByResto(restoId) {
+        return await sqlite.all('SELECT * FROM employees WHERE restaurant_id = ?', parseInt(restoId))
+    }
 }
 
 module.exports = Employees

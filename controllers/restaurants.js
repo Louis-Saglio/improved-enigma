@@ -1,5 +1,6 @@
 const express = require('express')
 const Restaurants = require('./../models/restaurants')
+const Employees = require('./../models/employees')
 
 const router = express.Router();
 
@@ -48,6 +49,12 @@ router.put('/:id', async (req, res) => {
         res.sendStatus(204)
     }
     
+})
+
+router.get('/:id/employees', async (req, res) => {
+    const resto = await Restaurants.get(req.params.id);
+    const employees = await Employees.getByResto(resto.id);
+    res.send(employees)
 })
 
 module.exports = router
