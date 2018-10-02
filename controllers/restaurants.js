@@ -33,12 +33,14 @@ router.put('/:id', async (req, res) => {
         req.body,
         {where: {id: req.params.id}}
     )
-    res.sendStatus(204)    
+    res.send(await Restaurants.findById(req.params.id))       
 })
 
 router.get('/:id/employees', async (req, res) => {
     const employees = await Employees.findAll({where: {restaurantId: req.params.id}})
-    res.send(employees)
+    const resto = await Restaurants.findById(req.params.id)
+    resto.dataValues.employees = employees
+    res.send(resto)
 })
 
 module.exports = router
