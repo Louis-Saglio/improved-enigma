@@ -17,8 +17,7 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    Employees.build(req.body).save()
-    res.sendStatus(201)
+    res.send(await Employees.build(req.body).save())
 })
 
 router.delete('/:id', (req, res) => {
