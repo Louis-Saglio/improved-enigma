@@ -1,59 +1,45 @@
 const express = require('express')
-const Restaurants = require('./../models/restaurants')
-const Employees = require('./../models/employees')
+const {Restaurants, Employees} = require('./../orm/restaurants')
+// const Employees = require('./../models/employees')
 
 const router = express.Router();
 
-Restaurants.init()
 
 router.get('/', async (req, res) => {
-    const restos = await Restaurants.all();
-    res.json(restos);
+    res.json(await Restaurants.findAll())
 })
 
 router.get('/:id', async (req, res) => {
-    const resto = await Restaurants.get(req.params.id);
-    if (resto === null) {
+    const resto = await Restaurants.findById(req.params.id)
+    if (resto === null) {   
         res.sendStatus(404)
     } else {
         res.json(resto)
     }
 })
 
-router.post('/', (req, res) => {
-    const {address, name, capacity} = req.body
-    new Restaurants(address, name, capacity).insert()
-    .then(() => {
-        res.sendStatus(201)
-    })
-    .catch(() => {
-        res.sendStatus(500)
-    })
+router.post('/', async (req, res) => {
+    Restaurants.build(req.body).save()
+    res.sendStatus(201)
 })
 
 router.delete('/:id', (req, res) => {
-    Restaurants.delete(req.params.id)
+    Restaurants.destroy({where: {id: req.params.id}})
     res.sendStatus(204)
 })
 
 router.put('/:id', async (req, res) => {
-    const resto = await Restaurants.get(req.params.id);
-    if (resto == undefined) {
-        res.sendStatus(404)
-    } else {
-        const {address, name, capacity} = req.body
-        resto.address = (address == undefined ? resto.address : address)
-        resto.name = (name == undefined ? resto.name : name)
-        resto.capacity = (capacity == undefined ? resto.capacity : capacity)
-        resto.update()
-        res.sendStatus(204)
-    }
-    
+    Restaurants.update(
+        req.body,
+        {where: {id: req.params.id}}
+    )
+    res.sendStatus(204)    
 })
 
 router.get('/:id/employees', async (req, res) => {
-    const resto = await Restaurants.get(req.params.id);
-    const employees = await Employees.getByResto(resto.id);
+    const resto = await Restaurants.findById(req.params.id)
+    console.log(resto.id)
+    const employees = await Employees.getByResto(resto.id)
     res.send(employees)
 })
 
