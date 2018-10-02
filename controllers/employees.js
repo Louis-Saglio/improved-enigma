@@ -3,8 +3,6 @@ const {Restaurants, Employees} = require('./../model/restaurants')
 
 const router = express.Router();
 
-// Employees.init()
-
 router.get('/', async (req, res) => {
     res.json(await Employees.findAll())
 })

@@ -1,6 +1,5 @@
 const express = require('express')
-const {Restaurants, Employees} = require('./../orm/restaurants')
-// const Employees = require('./../models/employees')
+const {Restaurants, Employees} = require('./../model/restaurants')
 
 const router = express.Router();
 
@@ -37,9 +36,7 @@ router.put('/:id', async (req, res) => {
 })
 
 router.get('/:id/employees', async (req, res) => {
-    const resto = await Restaurants.findById(req.params.id)
-    console.log(resto.id)
-    const employees = await Employees.getByResto(resto.id)
+    const employees = await Employees.findAll({where: {restaurantId: req.params.id}})
     res.send(employees)
 })
 
