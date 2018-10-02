@@ -12,14 +12,4 @@ const Restaurants = sequelize.define(
 
 Restaurants.sync()
 
-const Employees = sequelize.define(
-    'employees',
-    {
-        name: {type: Sequelize.STRING},
-    }
-)
-Employees.belongsTo(Restaurants)
-
-Employees.sync()
-
-module.exports = {'Restaurants': Restaurants, 'Employees': Employees}
+module.exports = Restaurants

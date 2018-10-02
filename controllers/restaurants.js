@@ -1,5 +1,6 @@
 const express = require('express')
-const {Restaurants, Employees} = require('./../model/restaurants')
+const Restaurants = require('./../model/restaurants')
+const Employees = require('./../model/employees')
 
 const router = express.Router();
 
